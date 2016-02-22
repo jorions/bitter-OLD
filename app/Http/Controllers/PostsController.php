@@ -28,7 +28,15 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new App\Post;
+
+        //$post->user_id = Auth::user()->id;
+        $post->user_id = $request->user_id;
+        $post->content = $request->content;
+
+        $post->save();
+
+        return $post;
     }
 
     /**
@@ -51,7 +59,17 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = App\Post::find($id);
+
+        // ?? IS THERE ANY NEED TO MODIFY THE USER_ID ??
+        //$post->user_id = Auth::user()->id;
+
+        $post->user_id = $request->user_id;
+        $post->content = $request->content;
+
+        $post->save();
+
+        return $post;
     }
 
     /**
@@ -62,6 +80,9 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = App\Post::find($id);
+        $post->delete();
+
+        return $post;
     }
 }

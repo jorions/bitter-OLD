@@ -28,7 +28,14 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new App\User;
+
+        $user->email = $request->email;
+        $user->password = $request->password;
+
+        $user->save();
+
+        return $user;
     }
 
     /**
@@ -51,7 +58,14 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = App\User::find($id);
+
+        $user->email = $request->email;
+        $user->password = $request->password;
+
+        $user->save();
+
+        return $user;
     }
 
     /**
@@ -62,6 +76,9 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = App\User::find($id);
+        $user->delete();
+
+        return $user;
     }
 }

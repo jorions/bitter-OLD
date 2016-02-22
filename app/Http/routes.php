@@ -15,9 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('user', 'UsersController');
+Route::resource('user', 'UsersController', [
+    'except' => ['create', 'edit']
+]);
 
-Route::resource('post', 'PostsController');
+Route::resource('post', 'PostsController', [
+    'except' => ['create', 'edit']
+]);
 
 /*
 |--------------------------------------------------------------------------
