@@ -30,9 +30,8 @@ class PostsController extends Controller
     {
         $post = new App\Post;
 
-        //$post->user_id = Auth::user()->id;
-        $post->user_id = $request->user_id;
-        $post->content = $request->content;
+        $post->user_id = \Auth::user()->id;
+        $post->content = $request->post_content;
 
         $post->save();
 
@@ -61,11 +60,7 @@ class PostsController extends Controller
     {
         $post = App\Post::find($id);
 
-        // ?? IS THERE ANY NEED TO MODIFY THE USER_ID ??
-        //$post->user_id = Auth::user()->id;
-
-        $post->user_id = $request->user_id;
-        $post->content = $request->content;
+        $post->content = $request->post_content;
 
         $post->save();
 
