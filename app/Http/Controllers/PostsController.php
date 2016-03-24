@@ -60,11 +60,14 @@ class PostsController extends Controller
     {
         $post = App\Post::find($id);
 
-        $post->content = $request->post_content;
+        // Make sure the user is the owner of the post
+        if($post->user_id == \Auth::user()->id) {
+            $post->content = $request->post_content;
+            $post->save();
+            return $post;
+        }
 
-        $post->save();
-
-        return $post;
+        return response("Unauthorized", 403);
     }
 
     /**
@@ -76,8 +79,13 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = App\Post::find($id);
-        $post->delete();
 
-        return $post;
+        // Make sure the user is the owner of the post
+        if($post->user_id == \Auth::user()->id) {
+            $post->delete();
+            return $post;
+        }
+
+        return response("Unauthorized", 403);
     }
 }
