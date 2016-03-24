@@ -34,23 +34,26 @@ Route::group(['middleware' => 'web'], function () {
         return view('welcome');
     });
 
-    Route::resource('user', 'UsersController', [
-        'only' => ['index', 'show']
-    ]);
 
-    Route::resource('post', 'PostsController', [
-        'only' => ['index', 'show']
-    ]);
-
-    Route::group(['middleware' => 'auth'], function() {
-
-        Route::resource('user', 'UsersController', [
-            'only' => ['store', 'update', 'destroy']
+    // Adds 'api/' to the beginning of every URL
+    Route::group(['prefix' => 'api'], function() {
+        Route::resource('users', 'UsersController', [
+            'only' => ['index', 'show']
         ]);
 
-        Route::resource('post', 'PostsController', [
-            'only' => ['store', 'update', 'destroy']
+        Route::resource('posts', 'PostsController', [
+            'only' => ['index', 'show']
         ]);
+
+        Route::group(['middleware' => 'auth'], function() {
+
+            Route::resource('users', 'UsersController', [
+                'only' => ['store', 'update', 'destroy']
+            ]);
+
+            Route::resource('posts', 'PostsController', [
+                'only' => ['store', 'update', 'destroy']
+            ]);
+        });
     });
-
 });
